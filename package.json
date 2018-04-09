@@ -1,0 +1,12 @@
+{
+  "name": "hello-react",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/groovili/hello-react.git",
+  "author": "groovili <m.ivanov.work@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1"
+  }
+}
