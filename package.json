@@ -1,8 +1,8 @@
 {
-  "name": "hello-react",
+  "name": "react-checklist",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/groovili/hello-react.git",
+  "repository": "https://github.com/groovili/react-checklist",
   "author": "groovili <m.ivanov.work@gmail.com>",
   "license": "MIT",
   "dependencies": {
