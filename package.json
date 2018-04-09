@@ -1,0 +1,17 @@
+{
+  "name": "react-checklist",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/groovili/react-checklist",
+  "author": "groovili <m.ivanov.work@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "react-favicon": "^0.0.14"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1"
+  }
+}
