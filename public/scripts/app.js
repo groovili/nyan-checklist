@@ -1,40 +1,51 @@
-"use strict";
+'use strict';
 
-console.log('App is alive!');
+// import Favicon from 'react-favicon';
+
+function App(name, subtitle) {
+  this.name = name;
+  this.subtitle = subtitle;
+  this.ReactDOM = ReactDOM;
+};
+
+App.prototype.render = function (template, id) {
+  var element = document.getElementById(id);
+  this.ReactDOM.render(template, element);
+};
+var app = new App('React Checklist', 'Simple app for task management.');
 
 var template = React.createElement(
-  "div",
+  'div',
   null,
   React.createElement(
-    "h1",
+    'h1',
     null,
-    "React Checklist"
+    app.name
   ),
   React.createElement(
-    "p",
+    'p',
     null,
-    "Simple app for task manager"
+    app.subtitle
   ),
   React.createElement(
-    "ul",
+    'ul',
     null,
     React.createElement(
-      "li",
+      'li',
       null,
-      "Task 1"
+      'Task 1'
     ),
     React.createElement(
-      "li",
+      'li',
       null,
-      "Some more"
+      'Some more'
     ),
     React.createElement(
-      "li",
+      'li',
       null,
-      "And the last one"
+      'And the last one'
     )
   )
 );
 
-var appRoot = document.getElementById("app");
-ReactDOM.render(template, appRoot);
+app.render(template, 'app');

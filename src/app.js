@@ -1,9 +1,21 @@
-console.log('App is alive!');
+// import Favicon from 'react-favicon';
 
-var template = (
+function App (name, subtitle){
+  this.name = name;
+  this.subtitle = subtitle;
+  this.ReactDOM = ReactDOM;
+};
+
+App.prototype.render = function (template , id) {
+  let element = document.getElementById(id);
+  this.ReactDOM.render(template, element);
+}
+const app = new App('React Checklist', 'Simple app for task management.');
+
+const template = (
   <div>
-    <h1>React Checklist</h1>
-    <p>Simple app for task manager</p>
+    <h1>{app.name}</h1>
+    <p>{app.subtitle}</p>
     <ul>
       <li>Task 1</li>
       <li>Some more</li>
@@ -12,5 +24,4 @@ var template = (
   </div>
 );
 
-var appRoot = document.getElementById("app");
-ReactDOM.render(template, appRoot);
+app.render(template, 'app');
