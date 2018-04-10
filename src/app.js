@@ -1,23 +1,19 @@
-// import Favicon from 'react-favicon';
+import React from 'react';
+import { hot } from 'react-hot-loader';
+import Template from './Template.js';
 
-function App (name, subtitle){
-  this.name = name;
-  this.subtitle = subtitle;
-  this.ReactDOM = ReactDOM;
-};
-
-App.prototype.render = function (template , id) {
-  let element = document.getElementById(id);
-  this.ReactDOM.render(template, element);
+class Render extends React.Component
+{
+  constructor(props) {
+    super(props);
+    this.state = {counter: 0};
+  }
+  componentDidMount(){
+    setInterval(() => {this.setState({ counter: this.state.counter + 1 })}, 1000);
+  }
+  render() {
+    return <Template {...this.props} counter={this.state.counter} />;
+  }
 }
 
-const app = new App('React Checklist', 'Simple app for task management.');
-
-const template = (
-  <div>
-    <h1>{app.name}</h1>
-    <p>{app.subtitle}</p>
-  </div>
-);
-
-app.render(template, 'app');
+export default hot(module)(Render);
