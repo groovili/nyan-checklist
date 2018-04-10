@@ -6,13 +6,15 @@
   "author": "groovili <m.ivanov.work@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "react-favicon": "^0.0.14",
-    "react-hot-loader": "^4.0.1",
-    "babel-polyfill": "^6.26.0"
+    "react-hot-loader": "^4.0.1"
   },
   "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "html-webpack-plugin": "^3.2.0",
     "webpack": "^3.11.0",
