@@ -8,6 +8,7 @@ class Template extends React.Component
         <h1>{this.props.name}</h1>
         <p>{this.props.subtitle}</p>
         <p>You are watching at this crap for {this.props.counter} seconds.</p>
+        <p><button onClick={this.props.resetCounter}>Reset counter</button></p>
       </div>
     );
   }
