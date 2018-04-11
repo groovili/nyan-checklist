@@ -29,7 +29,12 @@ class Template extends React.Component
               {this.props.list.map((item) => {return <li className="list-group-item" key={item}>{item}</li>;})}
             </ol>
             <div className="panel-footer">
-                <Form {...this.props} submitForm={this.props.submitForm} inputChange={this.props.inputChange}/>
+                <Form
+                  {...this.props}
+                  submitForm={this.props.submitForm}
+                  inputChange={this.props.inputChange}
+                  resetList={this.props.resetList}
+                />
             </div>
           </div>
           </div>

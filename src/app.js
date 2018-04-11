@@ -11,9 +11,10 @@ class Render extends React.Component
       task: "",
       list: [],
     };
-    
+
     this.inputChange = this.inputChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.resetList = this.resetList.bind(this);
   }
 
   inputChange(event) {
@@ -38,7 +39,7 @@ class Render extends React.Component
           list: tasksList.concat(this.state.list, inputValue)
         });
 
-        let childInputs = event.target.getElementsByTagName("input");
+        let childInputs = event.target.parentElement.getElementsByTagName("input");
         for(var i=0; i < childInputs.length; i++){
           childInputs[i].value = "";
         }
@@ -46,11 +47,19 @@ class Render extends React.Component
     }
   }
 
+  resetList(event) {
+    event.preventDefault();
+    this.setState({
+      list: []
+    })
+  }
+
   render() {
     return <Template
       {...this.props}
       inputChange={this.inputChange}
       submitForm={this.submitForm}
+      resetList={this.resetList}
       list={this.state.list}
     />;
   }
