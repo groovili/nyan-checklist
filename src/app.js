@@ -6,20 +6,62 @@ class Render extends React.Component
 {
   constructor(props) {
     super(props);
-    this.state = {counter: 0};
-    this.resetCounter = this.resetCounter.bind(this);
+
+    this.state = {
+      task: "",
+      list: [],
+    };
+
+    this.inputChange = this.inputChange.bind(this);
+    this.submitForm = this.submitForm.bind(this);
+    this.resetList = this.resetList.bind(this);
   }
 
-  componentDidMount() {
-    setInterval(() => {this.setState({ counter: this.state.counter + 1 })}, 1000);
+  inputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
   }
 
-  resetCounter() {
-    this.setState({counter: 0});
+  submitForm(event) {
+    event.preventDefault();
+
+    let inputValue = this.state.task;
+    let tasksList = [];
+
+    if(inputValue.length > 0){
+      if(!this.state.list.includes(inputValue)){
+        this.setState({
+          list: tasksList.concat(this.state.list, inputValue)
+        });
+
+        let childInputs = event.target.parentElement.getElementsByTagName("input");
+        for(var i=0; i < childInputs.length; i++){
+          childInputs[i].value = "";
+        }
+      }
+    }
   }
-  
+
+  resetList(event) {
+    event.preventDefault();
+    this.setState({
+      list: []
+    })
+  }
+
   render() {
-    return <Template {...this.props} counter={this.state.counter} resetCounter={this.resetCounter} />;
+    return <Template
+      {...this.props}
+      inputChange={this.inputChange}
+      submitForm={this.submitForm}
+      resetList={this.resetList}
+      list={this.state.list}
+    />;
   }
 }
 
