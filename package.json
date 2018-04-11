@@ -6,6 +6,9 @@
   "author": "groovili <m.ivanov.work@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.5",
+    "@fortawesome/fontawesome-free-solid": "^5.0.10",
+    "@fortawesome/react-fontawesome": "0.0.18",
     "babel-polyfill": "^6.26.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",

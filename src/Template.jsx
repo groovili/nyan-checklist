@@ -1,6 +1,8 @@
 import React from 'react';
 import Form from './Form.jsx';
 import Favicon from 'react-favicon';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import FreeSolid from '@fortawesome/fontawesome-free-solid';
 
 class Template extends React.Component
 {
@@ -11,8 +13,8 @@ class Template extends React.Component
         <div>
           <h1>{this.props.name}</h1>
           <p>{this.props.subtitle}</p>
-          <p>You are watching at this crap for {this.props.counter} seconds.</p>
-          <p><button onClick={this.props.resetCounter}>Reset counter</button></p>
+        <p>You are watching at this crap for <FontAwesomeIcon icon="clock" spin rotation={180} size="lg"/> <b>{this.props.counter}</b> seconds.</p>
+          <p><button onClick={this.props.resetCounter}><FontAwesomeIcon icon="times" /> Reset counter</button></p>
           <div className="task-list">
             <ol>
               {this.props.list.map((item) => {return <li key={item}>{item}</li>;})}
