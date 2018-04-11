@@ -8,22 +8,12 @@ class Render extends React.Component
     super(props);
 
     this.state = {
-      counter: 0,
       task: "",
       list: [],
     };
-
-    this.resetCounter = this.resetCounter.bind(this);
+    
     this.inputChange = this.inputChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
-  }
-
-  componentDidMount() {
-    setInterval(() => {this.setState({ counter: this.state.counter + 1 })}, 1000);
-  }
-
-  resetCounter() {
-    this.setState({counter: 0});
   }
 
   inputChange(event) {
@@ -59,8 +49,6 @@ class Render extends React.Component
   render() {
     return <Template
       {...this.props}
-      counter={this.state.counter}
-      resetCounter={this.resetCounter}
       inputChange={this.inputChange}
       submitForm={this.submitForm}
       list={this.state.list}

@@ -9,8 +9,11 @@
     "@fortawesome/fontawesome": "^1.1.5",
     "@fortawesome/fontawesome-free-solid": "^5.0.10",
     "@fortawesome/react-fontawesome": "0.0.18",
+    "aphrodite": "^2.1.1",
     "babel-polyfill": "^6.26.0",
+    "babel-preset-airbnb": "^2.4.0",
     "react": "^16.3.1",
+    "react-bootstrap": "^0.32.1",
     "react-dom": "^16.3.1",
     "react-favicon": "^0.0.14",
     "react-hot-loader": "^4.0.1"

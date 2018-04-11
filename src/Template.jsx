@@ -3,25 +3,34 @@ import Form from './Form.jsx';
 import Favicon from 'react-favicon';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import FreeSolid from '@fortawesome/fontawesome-free-solid';
+import { StyleSheet, css } from 'aphrodite';
+
+const styles = StyleSheet.create({
+
+});
 
 class Template extends React.Component
 {
   render() {
     return (
-      <div>
+      <div className="container">
         <Favicon url="http://oflisback.github.io/react-favicon/public/img/react.ico" />
-        <div>
-          <h1>{this.props.name}</h1>
-          <p>{this.props.subtitle}</p>
-        <p>You are watching at this crap for <FontAwesomeIcon icon="clock" spin rotation={180} size="lg"/> <b>{this.props.counter}</b> seconds.</p>
-          <p><button onClick={this.props.resetCounter}><FontAwesomeIcon icon="times" /> Reset counter</button></p>
-          <div className="task-list">
-            <ol>
-              {this.props.list.map((item) => {return <li key={item}>{item}</li>;})}
-            </ol>
+        <div className="row">
+          <div className="col-lg-12 col-md-12 col-sm-12">
+          <div className="well">
+              <h1>{this.props.name}</h1>
+              <dl>
+                <dt>{this.props.subtitle}</dt>
+              </dl>
           </div>
-          <div>
-            <Form {...this.props} submitForm={this.props.submitForm} inputChange={this.props.inputChange}/>
+          <div className="panel panel-default">
+            <ol className="list-group">
+              {this.props.list.map((item) => {return <li className="list-group-item" key={item}>{item}</li>;})}
+            </ol>
+            <div className="panel-footer">
+                <Form {...this.props} submitForm={this.props.submitForm} inputChange={this.props.inputChange}/>
+            </div>
+          </div>
           </div>
         </div>
       </div>
