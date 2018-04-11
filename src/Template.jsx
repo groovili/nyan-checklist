@@ -13,6 +13,7 @@ class Template extends React.Component
 {
   render() {
     return (
+      <div className="wrapper">
       <div className="container">
         <Favicon url="http://oflisback.github.io/react-favicon/public/img/react.ico" />
         <div className="row">
@@ -34,6 +35,7 @@ class Template extends React.Component
           </div>
         </div>
       </div>
+    </div>
     );
   }
 }
