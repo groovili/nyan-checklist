@@ -9,12 +9,16 @@ class Render extends React.Component
 
     this.state = {
       task: "",
+      completedTasks: 0,
       list: [],
     };
 
     this.inputChange = this.inputChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.resetList = this.resetList.bind(this);
+    this.completeTask = this.completeTask.bind(this);
+    this._deleteFromList = this._deleteFromList.bind(this);
+    this.removeTask = this.removeTask.bind(this);
   }
 
   inputChange(event) {
@@ -50,8 +54,56 @@ class Render extends React.Component
   resetList(event) {
     event.preventDefault();
     this.setState({
-      list: []
+      list: [],
+      completedTasks: 0
     })
+  }
+
+  _deleteFromList(completeTask){
+    let tasksList = this.state.list;
+    let completedIndex = tasksList.indexOf(completeTask);
+
+    if (completedIndex > -1) {
+      tasksList.splice(completedIndex, 1);
+
+      return tasksList;
+    }
+
+    return false;
+  }
+
+  completeTask(event) {
+    event.preventDefault();
+    let completeTask = event.target.closest("li").getAttribute("data-item");
+
+    if(this.state.list.includes(completeTask)){
+      let list = this._deleteFromList(completeTask, this);
+
+      if(list !== false){
+        this.setState({
+          completedTasks: this.state.completedTasks + 1
+        });
+
+        this.setState({
+          list: list
+        });
+      }
+    }
+  }
+
+  removeTask(event){
+    event.preventDefault();
+    let completeTask = event.target.closest("li").getAttribute("data-item");
+
+    if(this.state.list.includes(completeTask)){
+      let list = this._deleteFromList(completeTask, this);
+
+      if(list !== false){
+        this.setState({
+          list: list
+        });
+      }
+    }
   }
 
   render() {
@@ -61,6 +113,9 @@ class Render extends React.Component
       submitForm={this.submitForm}
       resetList={this.resetList}
       list={this.state.list}
+      completeTask={this.completeTask}
+      completedTasks={this.state.completedTasks}
+      removeTask={this.removeTask}
     />;
   }
 }

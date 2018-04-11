@@ -25,16 +25,42 @@ class Template extends React.Component
               </dl>
           </div>
           <div className="panel panel-default">
+            <div className="panel-heading">
+              <div className="row">
+                <div className="col-lg-12 col-md-12 col-sm-12">
+                  <span><b>Total:</b> {this.props.list.length}</span>
+                  <span><b>Completed:</b> {this.props.completedTasks}</span>
+                </div>
+              </div>
+            </div>
             <ol className="list-group">
-              {this.props.list.map((item) => {return <li className="list-group-item" key={item}>{item}</li>;})}
+              {this.props.list.map((item) => {
+                return <li className="list-group-item d-flex justify-content-between align-items-center" data-item={item} key={item}>
+                {item}
+                <a className="" href="#" onClick={this.props.removeTask}>
+                 <span className="label label-danger pull-right">
+                   <FontAwesomeIcon icon="times" size="lg"/>
+                </span>
+                </a>
+                <a className="" href="#" onClick={this.props.completeTask}>
+                 <span className="label label-success pull-right">
+                   <FontAwesomeIcon icon="check-square" size="lg"/>
+                </span>
+                </a>
+                </li>;
+              })}
             </ol>
             <div className="panel-footer">
-                <Form
-                  {...this.props}
-                  submitForm={this.props.submitForm}
-                  inputChange={this.props.inputChange}
-                  resetList={this.props.resetList}
-                />
+                <div className="row">
+                  <div className="col-lg-12 col-md-12 col-sm-12">
+                    <Form
+                      {...this.props}
+                      submitForm={this.props.submitForm}
+                      inputChange={this.props.inputChange}
+                      resetList={this.props.resetList}
+                    />
+                  </div>
+                </div>
             </div>
           </div>
           </div>
