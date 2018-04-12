@@ -6,14 +6,30 @@ import FreeSolid from '@fortawesome/fontawesome-free-solid';
 import { StyleSheet, css } from 'aphrodite';
 
 const styles = StyleSheet.create({
-
+  wrapper: {
+    fontSize: '16px',
+  },
+  dividerSmall:{
+    marginLeft:'5px',
+    marginRight: '5px'
+  },
+  dividerBig:{
+    marginLeft:'10px',
+    marginRight: '10px'
+  },
+  statsLabel: {
+    fontSize: '18px',
+    lineHeight: '24px',
+    position: 'relative',
+    top: '2px'
+  }
 });
 
 class Template extends React.Component
 {
   render() {
     return (
-      <div className="wrapper">
+      <div className={css(styles.wrapper)}>
       <div className="container">
         <Favicon url="http://oflisback.github.io/react-favicon/public/img/react.ico" />
         <div className="row">
@@ -27,9 +43,13 @@ class Template extends React.Component
           <div className="panel panel-default">
             <div className="panel-heading">
               <div className="row">
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <span><b>Total:</b> {this.props.list.length}</span>
-                  <span><b>Completed:</b> {this.props.completedTasks}</span>
+                <div className="col-lg-6 col-md-6 col-sm-6">
+                  <span><b className={css(styles.statsLabel)} >Total:</b> <span className="label label-primary">{this.props.list.length}</span></span>
+                  <span className={css(styles.dividerSmall)}></span>
+                  <span><b className={css(styles.statsLabel)}>Completed:</b> <span className="label label-success">{this.props.completedTasks}</span></span>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-6">
+                    <button className="btn btn-danger pull-right" name="reset" type="button" onClick={this.props.resetList} >Reset list <FontAwesomeIcon icon="times" /> </button>
                 </div>
               </div>
             </div>
@@ -37,13 +57,14 @@ class Template extends React.Component
               {this.props.list.map((item) => {
                 return <li className="list-group-item d-flex justify-content-between align-items-center" data-item={item} key={item}>
                 {item}
-                <a className="" href="#" onClick={this.props.removeTask}>
-                 <span className="label label-danger pull-right">
+                <a className="pull-right" href="#" onClick={this.props.removeTask}>
+                 <span className="label label-danger">
                    <FontAwesomeIcon icon="times" size="lg"/>
                 </span>
                 </a>
-                <a className="" href="#" onClick={this.props.completeTask}>
-                 <span className="label label-success pull-right">
+                <span className={css(styles.dividerSmall)}></span>
+                <a className="pull-right" href="#" onClick={this.props.completeTask}>
+                 <span className="label label-success">
                    <FontAwesomeIcon icon="check-square" size="lg"/>
                 </span>
                 </a>
@@ -57,7 +78,6 @@ class Template extends React.Component
                       {...this.props}
                       submitForm={this.props.submitForm}
                       inputChange={this.props.inputChange}
-                      resetList={this.props.resetList}
                       form={this.props.form}
                     />
                   </div>

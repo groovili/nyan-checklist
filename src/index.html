@@ -16,7 +16,11 @@
           /* also need animation and -moz-animation */
           -webkit-animation: shake .5s linear;
       }
-      
+
+      .invalid-input input[type="text"]{
+        border-color: #d9534f;
+      }
+
       @-webkit-keyframes shake {
       8%, 41% {
           -webkit-transform: translateX(-10px);
@@ -33,6 +37,22 @@
       0%, 100% {
           -webkit-transform: translateX(0);
       }
+    }
+    .round {
+      -webkit-border-top-left-radius: 1px;
+      -webkit-border-top-right-radius: 2px;
+      -webkit-border-bottom-right-radius: 3px;
+      -webkit-border-bottom-left-radius: 4px;
+
+      -moz-border-radius-topleft: 1px;
+      -moz-border-radius-topright: 2px;
+      -moz-border-radius-bottomright: 3px;
+      -moz-border-radius-bottomleft: 4px;
+
+      border-top-left-radius: 1px;
+      border-top-right-radius: 2px;
+      border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 4px;
     }
     </style>
   </head>
