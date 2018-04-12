@@ -5,8 +5,10 @@ import FreeSolid from '@fortawesome/fontawesome-free-solid';
 class Form extends React.Component
 {
   render(){
+    let formClass = "form-inline " + this.props.form.formClass;
+    
     return (
-      <form id="task-form" name="task-form" className="form-inline" onSubmit={this.props.submitForm}>
+      <form id="task-form" name="task-form" className={formClass} onSubmit={this.props.submitForm}>
         <div className="form-group">
           <input className="form-control" placeholder="New task" name="task" type="text"
             onChange={this.props.inputChange} value={this.props.form.task}></input>

@@ -11,6 +11,7 @@ class Render extends React.Component
       completedTasks: 0,
       list: [],
       form: {
+        formClass: "",
         task: "",
       },
     };
@@ -46,10 +47,27 @@ class Render extends React.Component
         this.setState({
           list: tasksList.concat(this.state.list, inputValue),
           form: {
+            formClass: "",
             task: "",
+          },
+        });
+      }
+      else{
+        this.setState({
+          form: {
+            task: this.state.form.task,
+            formClass: "invalid-input"
           }
         });
       }
+    }
+    else{
+      this.setState({
+        form: {
+          task: "",
+          formClass: "invalid-input"
+        }
+      });
     }
   }
 
@@ -59,6 +77,7 @@ class Render extends React.Component
       list: [],
       completedTasks: 0,
       form: {
+        formClass: "",
         task: "",
       }
     })
