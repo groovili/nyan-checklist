@@ -58,6 +58,7 @@ class Template extends React.Component
                       submitForm={this.props.submitForm}
                       inputChange={this.props.inputChange}
                       resetList={this.props.resetList}
+                      form={this.props.form}
                     />
                   </div>
                 </div>

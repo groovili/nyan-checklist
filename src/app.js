@@ -8,9 +8,11 @@ class Render extends React.Component
     super(props);
 
     this.state = {
-      task: "",
       completedTasks: 0,
       list: [],
+      form: {
+        task: "",
+      },
     };
 
     this.inputChange = this.inputChange.bind(this);
@@ -27,26 +29,26 @@ class Render extends React.Component
     const name = target.name;
 
     this.setState({
-      [name]: value
+      form:{
+        [name]: value,
+      }
     });
   }
 
   submitForm(event) {
     event.preventDefault();
 
-    let inputValue = this.state.task;
+    let inputValue = this.state.form.task;
     let tasksList = [];
 
     if(inputValue.length > 0){
       if(!this.state.list.includes(inputValue)){
         this.setState({
-          list: tasksList.concat(this.state.list, inputValue)
+          list: tasksList.concat(this.state.list, inputValue),
+          form: {
+            task: "",
+          }
         });
-
-        let childInputs = event.target.parentElement.getElementsByTagName("input");
-        for(var i=0; i < childInputs.length; i++){
-          childInputs[i].value = "";
-        }
       }
     }
   }
@@ -55,7 +57,10 @@ class Render extends React.Component
     event.preventDefault();
     this.setState({
       list: [],
-      completedTasks: 0
+      completedTasks: 0,
+      form: {
+        task: "",
+      }
     })
   }
 
@@ -116,6 +121,7 @@ class Render extends React.Component
       completeTask={this.completeTask}
       completedTasks={this.state.completedTasks}
       removeTask={this.removeTask}
+      form={this.state.form}
     />;
   }
 }
