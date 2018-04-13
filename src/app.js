@@ -1,6 +1,6 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
-import Template from './Template.jsx';
+import Template from './components/Template.jsx';
 
 class Render extends React.Component
 {

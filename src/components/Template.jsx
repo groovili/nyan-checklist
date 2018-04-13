@@ -4,32 +4,13 @@ import Favicon from 'react-favicon';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import FreeSolid from '@fortawesome/fontawesome-free-solid';
 import { StyleSheet, css } from 'aphrodite';
-
-const styles = StyleSheet.create({
-  wrapper: {
-    fontSize: '16px',
-  },
-  dividerSmall:{
-    marginLeft:'5px',
-    marginRight: '5px'
-  },
-  dividerBig:{
-    marginLeft:'10px',
-    marginRight: '10px'
-  },
-  statsLabel: {
-    fontSize: '18px',
-    lineHeight: '24px',
-    position: 'relative',
-    top: '2px'
-  }
-});
+import appStyles from '../styles/styles.js';
 
 class Template extends React.Component
 {
   render() {
     return (
-      <div className={css(styles.wrapper)}>
+      <div className={css(appStyles.wrapper)}>
       <div className="container">
         <Favicon url="http://oflisback.github.io/react-favicon/public/img/react.ico" />
         <div className="row">
@@ -44,12 +25,12 @@ class Template extends React.Component
             <div className="panel-heading">
               <div className="row">
                 <div className="col-lg-6 col-md-6 col-sm-6">
-                  <span><b className={css(styles.statsLabel)} >Total:</b> <span className="label label-primary">{this.props.list.length}</span></span>
-                  <span className={css(styles.dividerSmall)}></span>
-                  <span><b className={css(styles.statsLabel)}>Completed:</b> <span className="label label-success">{this.props.completedTasks}</span></span>
+                  <span><b className={css(appStyles.statsLabel)} >Total:</b> <span className="label label-primary">{this.props.list.length}</span></span>
+                  <span className={css(appStyles.dividerSmall)}></span>
+                  <span><b className={css(appStyles.statsLabel)}>Completed:</b> <span className="label label-success">{this.props.completedTasks}</span></span>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6">
-                    <button className="btn btn-danger pull-right" name="reset" type="button" onClick={this.props.resetList} ><FontAwesomeIcon icon="history" /> </button>
+                    <button className="btn btn-danger pull-right btn-sm" name="reset" type="button" onClick={this.props.resetList} ><FontAwesomeIcon icon="history" /> </button>
                 </div>
               </div>
             </div>
