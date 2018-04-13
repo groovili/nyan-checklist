@@ -41,46 +41,48 @@ class Render extends React.Component
 
     let inputValue = this.state.form.task;
     let tasksList = [];
+    let form = this.state.form;
 
     if(inputValue.length > 0){
       if(!this.state.list.includes(inputValue)){
+        form.task = "";
+        form.formClass = "";
+
         this.setState({
           list: tasksList.concat(this.state.list, inputValue),
-          form: {
-            formClass: "",
-            task: "",
-          },
+          form: form,
         });
       }
       else{
+        form.formClass = "invalid-input";
+
         this.setState({
-          form: {
-            task: this.state.form.task,
-            formClass: "invalid-input"
-          }
+          form: form,
         });
       }
     }
     else{
+      form.task = "";
+      form.formClass = "invalid-input";
+
       this.setState({
-        form: {
-          task: "",
-          formClass: "invalid-input"
-        }
+        form: form,
       });
     }
   }
 
   resetList(event) {
     event.preventDefault();
+
+    let form = this.state.form;
+    form.task = "";
+    form.formClass = "";
+
     this.setState({
       list: [],
       completedTasks: 0,
-      form: {
-        formClass: "",
-        task: "",
-      }
-    })
+      form: form,
+    });
   }
 
   _deleteFromList(completeTask){
