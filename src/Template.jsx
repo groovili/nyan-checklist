@@ -49,7 +49,7 @@ class Template extends React.Component
                   <span><b className={css(styles.statsLabel)}>Completed:</b> <span className="label label-success">{this.props.completedTasks}</span></span>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6">
-                    <button className="btn btn-danger pull-right" name="reset" type="button" onClick={this.props.resetList} >Reset list <FontAwesomeIcon icon="times" /> </button>
+                    <button className="btn btn-danger pull-right" name="reset" type="button" onClick={this.props.resetList} ><FontAwesomeIcon icon="history" /> </button>
                 </div>
               </div>
             </div>
@@ -57,15 +57,14 @@ class Template extends React.Component
               {this.props.list.map((item) => {
                 return <li className="list-group-item d-flex justify-content-between align-items-center" data-item={item} key={item}>
                 {item}
-                <a className="pull-right" href="#" onClick={this.props.removeTask}>
+                <a className="action-link pull-right" href="#" onClick={this.props.removeTask}>
                  <span className="label label-danger">
                    <FontAwesomeIcon icon="times" size="lg"/>
                 </span>
                 </a>
-                <span className={css(styles.dividerSmall)}></span>
-                <a className="pull-right" href="#" onClick={this.props.completeTask}>
+                <a className="action-link pull-right" href="#" onClick={this.props.completeTask}>
                  <span className="label label-success">
-                   <FontAwesomeIcon icon="check-square" size="lg"/>
+                   <FontAwesomeIcon icon="check" size="lg"/>
                 </span>
                 </a>
                 </li>;
