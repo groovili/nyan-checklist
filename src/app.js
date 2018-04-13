@@ -1,6 +1,7 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
 import Template from './components/Template.jsx';
+import Moment from 'moment';
 
 class Render extends React.Component
 {
@@ -13,6 +14,7 @@ class Render extends React.Component
       form: {
         formClass: "",
         task: "",
+        date: "",
       },
     };
 
@@ -25,15 +27,23 @@ class Render extends React.Component
   }
 
   inputChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+    let form = this.state.form;
 
-    this.setState({
-      form:{
-        [name]: value,
-      }
-    });
+    if(!event instanceof Moment){
+      const target = event.target;
+      const value = target.value;
+      const name = target.name;
+
+      form[name] = value;
+      this.setState({
+        form: form,
+      });
+    }else{
+      form.date = event;
+      this.setState({
+        form: form
+      });
+    }
   }
 
   submitForm(event) {
