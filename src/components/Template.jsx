@@ -18,7 +18,7 @@ class Template extends React.Component
       rows.push(<li className="list-group-item d-flex justify-content-between align-items-center" data-item={key} key={key}>
       <b>{value[0]}</b>&nbsp;
       <div className="pull-right">
-        <span><FontAwesomeIcon icon="hourglass-half"/>&nbsp;{moment(value[1]).format(timeFormat.toString())}</span>
+      <span className="label label-info label-time"><FontAwesomeIcon icon="hourglass-half"/>&nbsp;{moment(value[1]).format(timeFormat.toString())}</span>
       <span className={css(appStyles.dividerBig)}></span>
         <a className="action-link" href="#" onClick={this.props.completeTask}>
          <span className="label label-success">

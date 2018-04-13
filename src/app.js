@@ -40,7 +40,7 @@ class Render extends React.Component
         form: form,
       });
     }else{
-      form.date = event.format(timeFormat.toString()).toString();
+      form.date = event.toString();
       this.setState({
         form: form
       });
