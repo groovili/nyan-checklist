@@ -20,7 +20,7 @@ class Form extends React.Component
           <span className={css(appStyles.dividerSmall)}></span>
         <div className={css(appStyles.inlineBlock)}>
           <DatePicker
-              selected={this.props.form.date}
+              selected={moment(this.props.form.date)}
               onChange={this.props.inputChange}
               showTimeSelect
               showTimeSelectOnly
