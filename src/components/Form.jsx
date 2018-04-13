@@ -12,6 +12,10 @@ class Form extends React.Component
 {
   render() {
     let formClass = "form-inline " + this.props.form.formClass;
+    let selectedTime = undefined;
+    if(this.props.form.date){
+      selectedTime = moment(this.props.form.date);
+    }
 
     return (
       <form id="task-form" name="task-form" className={formClass} onSubmit={this.props.submitForm}>
@@ -20,7 +24,7 @@ class Form extends React.Component
           <span className={css(appStyles.dividerSmall)}></span>
         <div className={css(appStyles.inlineBlock)}>
           <DatePicker
-              selected={moment(this.props.form.date)}
+              selected={selectedTime}
               onChange={this.props.inputChange}
               showTimeSelect
               showTimeSelectOnly

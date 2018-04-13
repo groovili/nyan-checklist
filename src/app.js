@@ -14,7 +14,7 @@ class Render extends React.Component
       form: {
         formClass: "",
         task: "",
-        date: Moment().toString(),
+        date: undefined,
       },
     };
 

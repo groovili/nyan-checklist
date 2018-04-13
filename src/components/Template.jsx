@@ -15,17 +15,22 @@ class Template extends React.Component
 
     for (var [key, value] of tasksList.entries()) {
       rows.push(<li className="list-group-item d-flex justify-content-between align-items-center" data-item={key} key={key}>
-      <b>{value[0]}</b> <span>({moment(value[1]).format("HH:mm")})</span>
-      <a className="action-link pull-right" href="#" onClick={this.props.removeTask}>
-       <span className="label label-danger">
-         <FontAwesomeIcon icon="times" size="lg"/>
-      </span>
-      </a>
-      <a className="action-link pull-right" href="#" onClick={this.props.completeTask}>
-       <span className="label label-success">
-         <FontAwesomeIcon icon="check" size="lg"/>
-      </span>
-      </a>
+      <b>{value[0]}</b>&nbsp;
+      <div className="pull-right">
+        <span><FontAwesomeIcon icon="hourglass-half"/>&nbsp;{moment(value[1]).format("HH:mm")}</span>
+      <span className={css(appStyles.dividerBig)}></span>
+        <a className="action-link" href="#" onClick={this.props.completeTask}>
+         <span className="label label-success">
+           <FontAwesomeIcon icon="check" size="lg"/>
+        </span>
+        </a>
+        <span className={css(appStyles.dividerSmall)}></span>
+        <a className="action-link" href="#" onClick={this.props.removeTask}>
+         <span className="label label-danger">
+           <FontAwesomeIcon icon="times" size="lg"/>
+        </span>
+        </a>
+      </div>
     </li>);
     }
 
