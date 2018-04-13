@@ -7,6 +7,7 @@ import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../styles/styles.css';
+import { timeFormat } from '../config/config.js';
 
 class Form extends React.Component
 {
@@ -15,6 +16,9 @@ class Form extends React.Component
     let selectedTime = undefined;
     if(this.props.form.date){
       selectedTime = moment(this.props.form.date);
+    }
+    else{
+      selectedTime = moment().hour(0).minute(30);
     }
 
     return (
@@ -29,8 +33,8 @@ class Form extends React.Component
               showTimeSelect
               showTimeSelectOnly
               timeIntervals={30}
-              dateFormat="HH:mm"
-              timeFormat="HH:mm"
+              dateFormat={timeFormat.toString()}
+              timeFormat={timeFormat.toString()}
               timeCaption=""
               className="form-control input-lg"
               placeholderText="Estimated time"

@@ -2,6 +2,7 @@ import React from 'react';
 import { hot } from 'react-hot-loader';
 import Template from './components/Template.jsx';
 import Moment from 'moment';
+import { timeFormat } from './config/config.js';
 
 class Render extends React.Component
 {
@@ -39,7 +40,7 @@ class Render extends React.Component
         form: form,
       });
     }else{
-      form.date = event.toString();
+      form.date = event.format(timeFormat.toString()).toString();
       this.setState({
         form: form
       });
@@ -76,9 +77,6 @@ class Render extends React.Component
       }
     }
     else{
-      form.task = "";
-      form.date = undefined;
-
       form.formClass = "invalid-input";
 
       this.setState({

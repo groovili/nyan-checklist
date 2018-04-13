@@ -6,6 +6,7 @@ import FreeSolid from '@fortawesome/fontawesome-free-solid';
 import { StyleSheet, css } from 'aphrodite';
 import appStyles from '../styles/styles.js';
 import moment from 'moment';
+import { timeFormat } from '../config/config.js';
 
 class Template extends React.Component
 {
@@ -17,7 +18,7 @@ class Template extends React.Component
       rows.push(<li className="list-group-item d-flex justify-content-between align-items-center" data-item={key} key={key}>
       <b>{value[0]}</b>&nbsp;
       <div className="pull-right">
-        <span><FontAwesomeIcon icon="hourglass-half"/>&nbsp;{moment(value[1]).format("HH:mm")}</span>
+        <span><FontAwesomeIcon icon="hourglass-half"/>&nbsp;{moment(value[1]).format(timeFormat.toString())}</span>
       <span className={css(appStyles.dividerBig)}></span>
         <a className="action-link" href="#" onClick={this.props.completeTask}>
          <span className="label label-success">
@@ -50,7 +51,7 @@ class Template extends React.Component
             <div className="panel-heading">
               <div className="row">
                 <div className="col-lg-6 col-md-6 col-sm-6">
-                  <span><b className={css(appStyles.statsLabel)} >Total:</b> <span className="label label-primary">{this.props.list.length}</span></span>
+                  <span><b className={css(appStyles.statsLabel)} >Total:</b> <span className="label label-primary">{this.props.list.size}</span></span>
                   <span className={css(appStyles.dividerSmall)}></span>
                   <span><b className={css(appStyles.statsLabel)}>Completed:</b> <span className="label label-success">{this.props.completedTasks}</span></span>
                 </div>
