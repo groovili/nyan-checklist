@@ -4,6 +4,9 @@ const appStyles = StyleSheet.create({
   wrapper: {
     fontSize: '16px',
   },
+  inlineBlock: {
+    display: 'inline-block',
+  },
   dividerSmall:{
     marginLeft:'5px',
     marginRight: '5px'

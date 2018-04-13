@@ -5,10 +5,36 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import FreeSolid from '@fortawesome/fontawesome-free-solid';
 import { StyleSheet, css } from 'aphrodite';
 import appStyles from '../styles/styles.js';
+import moment from 'moment';
+import { timeFormat } from '../config/config.js';
 
 class Template extends React.Component
 {
   render() {
+    let tasksList = this.props.list;
+    let rows = [];
+
+    for (var [key, value] of tasksList.entries()) {
+      rows.push(<li className="list-group-item d-flex justify-content-between align-items-center" data-item={key} key={key}>
+      <b>{value[0]}</b>&nbsp;
+      <div className="pull-right">
+      <span className="label label-info label-time"><FontAwesomeIcon icon="hourglass-half"/>&nbsp;{moment(value[1]).format(timeFormat.toString())}</span>
+      <span className={css(appStyles.dividerBig)}></span>
+        <a className="action-link" href="#" onClick={this.props.completeTask}>
+         <span className="label label-success">
+           <FontAwesomeIcon icon="check" size="lg"/>
+        </span>
+        </a>
+        <span className={css(appStyles.dividerSmall)}></span>
+        <a className="action-link" href="#" onClick={this.props.removeTask}>
+         <span className="label label-danger">
+           <FontAwesomeIcon icon="times" size="lg"/>
+        </span>
+        </a>
+      </div>
+    </li>);
+    }
+
     return (
       <div className={css(appStyles.wrapper)}>
       <div className="container">
@@ -25,7 +51,7 @@ class Template extends React.Component
             <div className="panel-heading">
               <div className="row">
                 <div className="col-lg-6 col-md-6 col-sm-6">
-                  <span><b className={css(appStyles.statsLabel)} >Total:</b> <span className="label label-primary">{this.props.list.length}</span></span>
+                  <span><b className={css(appStyles.statsLabel)} >Total:</b> <span className="label label-primary">{this.props.list.size}</span></span>
                   <span className={css(appStyles.dividerSmall)}></span>
                   <span><b className={css(appStyles.statsLabel)}>Completed:</b> <span className="label label-success">{this.props.completedTasks}</span></span>
                 </div>
@@ -35,21 +61,7 @@ class Template extends React.Component
               </div>
             </div>
             <ol className="list-group">
-              {this.props.list.map((item) => {
-                return <li className="list-group-item d-flex justify-content-between align-items-center" data-item={item} key={item}>
-                {item}
-                <a className="action-link pull-right" href="#" onClick={this.props.removeTask}>
-                 <span className="label label-danger">
-                   <FontAwesomeIcon icon="times" size="lg"/>
-                </span>
-                </a>
-                <a className="action-link pull-right" href="#" onClick={this.props.completeTask}>
-                 <span className="label label-success">
-                   <FontAwesomeIcon icon="check" size="lg"/>
-                </span>
-                </a>
-                </li>;
-              })}
+              {rows}
             </ol>
             <div className="panel-footer">
                 <div className="row">
