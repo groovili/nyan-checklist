@@ -11,6 +11,7 @@ class Render extends React.Component
 
     this.state = {
       completedTasks: 0,
+      totalEstimatedCurrent: 0,
       list: new Map(),
       form: {
         formClass: "",
@@ -25,6 +26,7 @@ class Render extends React.Component
     this.completeTask = this.completeTask.bind(this);
     this._deleteFromList = this._deleteFromList.bind(this);
     this.removeTask = this.removeTask.bind(this);
+    this._calculateCurrentEstimation = this._calculateCurrentEstimation.bind(this);
   }
 
   inputChange(event) {
@@ -39,12 +41,22 @@ class Render extends React.Component
       this.setState({
         form: form,
       });
-    }else{
+    }
+    else{
       form.date = event.toString();
       this.setState({
         form: form
       });
     }
+  }
+
+  _calculateCurrentEstimation(list){
+    let totalEstimatedCurrent = Moment.duration(0, 'minutes');
+    for (var [key, value] of list.entries()) {
+      totalEstimatedCurrent.add(value[1], 'minutes');
+    }
+
+    return totalEstimatedCurrent.asHours();
   }
 
   submitForm(event) {
@@ -60,12 +72,19 @@ class Render extends React.Component
         form.date = undefined;
         form.formClass = "";
 
+        let dateObj = Moment(dateValue);
+        let dateStart = dateObj.clone().startOf('day');
+        let diffMinutes = dateObj.diff(dateStart, 'minutes');
+
         let map = this.state.list;
-        map.set(inputValue, [inputValue, dateValue]);
+        map.set(inputValue, [inputValue, diffMinutes]);
+
+        let totalEstimatedCurrent = this._calculateCurrentEstimation(map);
 
         this.setState({
           list: map,
           form: form,
+          totalEstimatedCurrent: totalEstimatedCurrent,
         });
       }
       else{
@@ -97,6 +116,7 @@ class Render extends React.Component
       list: new Map(),
       completedTasks: 0,
       form: form,
+      totalEstimatedCurrent: 0,
     });
   }
 
@@ -120,8 +140,11 @@ class Render extends React.Component
       let list = this._deleteFromList(completeTask);
 
       if(list !== false){
+        let totalEstimatedCurrent = this._calculateCurrentEstimation(list);
+
         this.setState({
-          completedTasks: this.state.completedTasks + 1
+          completedTasks: this.state.completedTasks + 1,
+          totalEstimatedCurrent: totalEstimatedCurrent,
         });
 
         this.setState({
@@ -139,8 +162,11 @@ class Render extends React.Component
       let list = this._deleteFromList(completeTask);
 
       if(list !== false){
+        let totalEstimatedCurrent = this._calculateCurrentEstimation(list);
+
         this.setState({
-          list: list
+          list: list,
+          totalEstimatedCurrent: totalEstimatedCurrent,
         });
       }
     }
@@ -155,6 +181,7 @@ class Render extends React.Component
       list={this.state.list}
       completeTask={this.completeTask}
       completedTasks={this.state.completedTasks}
+      totalEstimatedCurrent={this.state.totalEstimatedCurrent}
       removeTask={this.removeTask}
       form={this.state.form}
     />;
