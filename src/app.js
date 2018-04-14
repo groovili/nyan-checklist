@@ -13,6 +13,7 @@ class Render extends React.Component
       completedTasks: 0,
       totalEstimatedCurrent: 0,
       list: new Map(),
+      completedList: new Map(),
       form: {
         formClass: "",
         task: "",
@@ -69,7 +70,7 @@ class Render extends React.Component
     if((inputValue && dateValue) && (inputValue.length > 0 && dateValue.length > 0)){
       if(!this.state.list.has(inputValue)){
         form.task = "";
-        form.date = undefined;
+        form.date = Moment().hour(0).minute(30).toString();
         form.formClass = "";
 
         let dateObj = Moment(dateValue);
@@ -109,21 +110,32 @@ class Render extends React.Component
 
     let form = this.state.form;
     form.task = "";
-    form.date = undefined;
+    form.date = Moment().hour(0).minute(30).toString();
     form.formClass = "";
 
     this.setState({
       list: new Map(),
+      completedList: new Map(),
       completedTasks: 0,
       form: form,
       totalEstimatedCurrent: 0,
     });
   }
 
-  _deleteFromList(completeTask){
+  _deleteFromList(completeTask, save = false){
     let tasksList = this.state.list;
 
     if (tasksList.has(completeTask)) {
+      if(save){
+        let completedElement = tasksList.get(completeTask);
+        let completedList = this.state.completedList;
+        completedList.set(completeTask, completedElement);
+
+        this.setState({
+          completedList: completedList,
+        });
+      }
+
       tasksList.delete(completeTask);
 
       return tasksList;
@@ -137,7 +149,7 @@ class Render extends React.Component
     let completeTask = event.target.closest("li").getAttribute("data-item");
 
     if(this.state.list.has(completeTask)){
-      let list = this._deleteFromList(completeTask);
+      let list = this._deleteFromList(completeTask, true);
 
       if(list !== false){
         let totalEstimatedCurrent = this._calculateCurrentEstimation(list);
