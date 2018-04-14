@@ -28,27 +28,9 @@ class Render extends React.Component
     this._deleteFromList = this._deleteFromList.bind(this);
     this.removeTask = this.removeTask.bind(this);
     this._calculateCurrentEstimation = this._calculateCurrentEstimation.bind(this);
-  }
-
-  inputChange(event) {
-    let form = this.state.form;
-
-    if(!(event instanceof Moment)){
-      const target = event.target;
-      const value = target.value;
-      const name = target.name;
-
-      form[name] = value;
-      this.setState({
-        form: form,
-      });
-    }
-    else{
-      form.date = event.toString();
-      this.setState({
-        form: form
-      });
-    }
+    this._validateForm = this._validateForm.bind(this);
+    this._setFormError = this._setFormError.bind(this);
+    this._formSetDefaults = this._formSetDefaults.bind(this);
   }
 
   _calculateCurrentEstimation(list){
@@ -60,65 +42,21 @@ class Render extends React.Component
     return totalEstimatedCurrent.asHours();
   }
 
-  submitForm(event) {
-    event.preventDefault();
-
-    let inputValue = this.state.form.task;
-    let dateValue = this.state.form.date;
-    let form = this.state.form;
+  _validateForm(form){
+    let inputValue = form.task;
+    let dateValue = form.date;
 
     if((inputValue && dateValue) && (inputValue.length > 0 && dateValue.length > 0)){
-      if(!this.state.list.has(inputValue)){
-        form.task = "";
-        form.date = Moment().hour(0).minute(30).toString();
-        form.formClass = "";
-
-        let dateObj = Moment(dateValue);
-        let dateStart = dateObj.clone().startOf('day');
-        let diffMinutes = dateObj.diff(dateStart, 'minutes');
-
-        let map = this.state.list;
-        map.set(inputValue, [inputValue, diffMinutes]);
-
-        let totalEstimatedCurrent = this._calculateCurrentEstimation(map);
-
-        this.setState({
-          list: map,
-          form: form,
-          totalEstimatedCurrent: totalEstimatedCurrent,
-        });
-      }
-      else{
-        form.formClass = "invalid-input";
-
-        this.setState({
-          form: form,
-        });
-      }
+      return true;
     }
-    else{
-      form.formClass = "invalid-input";
 
-      this.setState({
-        form: form,
-      });
-    }
+    return false;
   }
 
-  resetList(event) {
-    event.preventDefault();
-
-    let form = this.state.form;
-    form.task = "";
-    form.date = Moment().hour(0).minute(30).toString();
-    form.formClass = "";
-
+  _setFormError(form){
+    form.formClass = "invalid-input";
     this.setState({
-      list: new Map(),
-      completedList: new Map(),
-      completedTasks: 0,
       form: form,
-      totalEstimatedCurrent: 0,
     });
   }
 
@@ -142,6 +80,82 @@ class Render extends React.Component
     }
 
     return false;
+  }
+
+  _formSetDefaults(form){
+    form.task = "";
+    form.date = Moment().hour(0).minute(30).toString();
+    form.formClass = "";
+
+    return form;
+  }
+
+  inputChange(event) {
+    let form = this.state.form;
+
+    if(!(event instanceof Moment)){
+      const target = event.target;
+      const value = target.value;
+      const name = target.name;
+
+      form[name] = value;
+      this.setState({
+        form: form,
+      });
+    }
+    else{
+      form.date = event.toString();
+      this.setState({
+        form: form
+      });
+    }
+  }
+
+  submitForm(event) {
+    event.preventDefault();
+    let form = this.state.form;
+
+    if(this._validateForm(form)){
+      if(!this.state.list.has(form.task)){
+        let dateObj = Moment(form.date);
+        let dateStart = dateObj.clone().startOf('day');
+        let diffMinutes = dateObj.diff(dateStart, 'minutes');
+
+        let map = this.state.list;
+        map.set(form.task, [form.task, diffMinutes]);
+
+        let totalEstimatedCurrent = this._calculateCurrentEstimation(map);
+
+        form = this._formSetDefaults(form);
+
+        this.setState({
+          list: map,
+          form: form,
+          totalEstimatedCurrent: totalEstimatedCurrent,
+        });
+      }
+      else{
+        this._setFormError(form);
+      }
+    }
+    else{
+      this._setFormError(form);
+    }
+  }
+
+  resetList(event) {
+    event.preventDefault();
+
+    let form = this.state.form;
+    form = this._formSetDefaults(form);
+
+    this.setState({
+      list: new Map(),
+      completedList: new Map(),
+      completedTasks: 0,
+      form: form,
+      totalEstimatedCurrent: 0,
+    });
   }
 
   completeTask(event) {
