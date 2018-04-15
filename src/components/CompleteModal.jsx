@@ -26,9 +26,17 @@ Modal.setAppElement('#app');
 class CompleteModal extends React.Component
 {
   render() {
+    let formClass = "form-inline " + this.props.modalForm.formClass;
+    let selectedTime = undefined;
+    if(this.props.modalForm.date){
+      selectedTime = moment(this.props.modalForm.date);
+    }
+    else{
+      selectedTime = moment().hour(0).minute(30);
+    }
+
     return (
       <div>
-        <button onClick={this.props.openModal}>Open</button>
         <Modal
           isOpen={this.props.modalIsOpen}
           onAfterOpen={this.props.afterOpenModal}
@@ -38,12 +46,13 @@ class CompleteModal extends React.Component
           >
           <button className="btn btn-modal-close btn-danger btn-sm" onClick={this.props.closeModal}><FontAwesomeIcon icon="times" /></button>
           <div className="text-center">
-            <form id="log-time-form" name="log-time-form" onSubmit={this.props.submitForm}>
+            <form id="log-time-form" className={formClass} name="log-time-form" onSubmit={this.props.modalFormSubmit}>
                 <p>Please log spent time here</p>
                 <div className={css(appStyles.inlineBlock)}>
                 <div className={css(appStyles.inlineBlock)}>
                 <DatePicker
-                    selected={moment().hour(0).minute(30)}
+                    selected={selectedTime}
+                    onChange={this.props.modalFormInputChange}
                     showTimeSelect
                     showTimeSelectOnly
                     timeIntervals={30}
