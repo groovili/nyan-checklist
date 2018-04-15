@@ -8,6 +8,7 @@ import appStyles from '../styles/styles.js';
 import moment from 'moment';
 import { timeFormat } from '../config/config.js';
 import ReactTooltip from 'react-tooltip'
+import CompleteModal from './CompleteModal.jsx';
 
 class Template extends React.Component
 {
@@ -45,12 +46,15 @@ class Template extends React.Component
     if(this.props.completeListVisible){
       for (var [key, value] of completedList.entries()) {
         let duration = moment.duration(value[1], 'minutes');
+        let durationSpent = moment.duration(value[2], 'minutes');
 
         completeListRows.push(<li className="list-group-item disabled d-flex justify-content-between align-items-center" data-item={key} key={key}>
         <ReactTooltip />
         <b>{value[0]}</b>&nbsp;
         <div className="pull-right">
         <span data-tip="Estimated time" className="label label-info label-time"><FontAwesomeIcon icon="hourglass-half"/>&nbsp;{duration.asHours()}</span>
+        <span className={css(appStyles.dividerSmall)}></span>
+        <span data-tip="Spent time" className="label label-success label-time"><FontAwesomeIcon icon="hourglass-half"/>&nbsp;{durationSpent.asHours()}</span>
         </div>
       </li>);
       }
@@ -58,6 +62,7 @@ class Template extends React.Component
 
     let totalEstimatedCurrent = moment.duration(this.props.totalEstimatedCurrent, 'hours');
     let totalEstimatedCompleted = moment.duration(this.props.totalEstimatedCompleted, 'hours');
+    let totalSpentCompleted = moment.duration(this.props.totalSpentCompleted, 'hours');
 
     return (
       <div className={css(appStyles.wrapper)}>
@@ -71,6 +76,15 @@ class Template extends React.Component
               <dl>
                 <dt>{this.props.subtitle}</dt>
               </dl>
+              <CompleteModal
+                {...this.props}
+                modalIsOpen={this.props.modalIsOpen}
+                afterOpenModal={this.props.afterOpenModal}
+                closeModal={this.props.closeModal}
+                modalFormInputChange={this.props.modalFormInputChange}
+                modalFormSubmit={this.props.modalFormSubmit}
+                modalForm={this.props.modalForm}
+              />
           </div>
           <div className="panel panel-default">
             <div className="panel-heading">
@@ -83,6 +97,8 @@ class Template extends React.Component
                   <span data-tip="Estimated time for new tasks" className="label label-warning"><FontAwesomeIcon  icon="hourglass-half"/>&nbsp;{totalEstimatedCurrent.asHours()} hours</span>
                   <span className={css(appStyles.dividerSmall)}></span>
                   <span data-tip="Estimated time of completed tasks" className="label label-info"><FontAwesomeIcon  icon="hourglass-half"/>&nbsp;{totalEstimatedCompleted.asHours()} hours</span>
+                  <span className={css(appStyles.dividerSmall)}></span>
+                  <span data-tip="Spent time of completed tasks" className="label label-success"><FontAwesomeIcon  icon="hourglass-half"/>&nbsp;{totalSpentCompleted.asHours()} hours</span>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 text-right">
                     <button data-tip="Show completed list" className="btn btn-default btn-sm" name="reset" type="button" onClick={this.props.showCompletedList} ><FontAwesomeIcon icon="history" /> </button>
