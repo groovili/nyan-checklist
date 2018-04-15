@@ -21,6 +21,7 @@ class Render extends React.Component
         date: Moment().hour(0).minute(30).toString(),
       },
       completeListVisible: false,
+      modalIsOpen: false,
     };
 
     this.inputChange = this.inputChange.bind(this);
@@ -34,6 +35,9 @@ class Render extends React.Component
     this._setFormError = this._setFormError.bind(this);
     this._formSetDefaults = this._formSetDefaults.bind(this);
     this.showCompletedList = this.showCompletedList.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   _calculateCurrentEstimation(list){
@@ -160,6 +164,7 @@ class Render extends React.Component
       totalEstimatedCurrent: 0,
       totalEstimatedCompleted: 0,
       completeListVisible: false,
+      modalIsOpen: false,
     });
   }
 
@@ -214,6 +219,18 @@ class Render extends React.Component
     });
   }
 
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+
+  afterOpenModal() {
+    
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
+  }
+
   render() {
     return <Template
       {...this.props}
@@ -230,6 +247,10 @@ class Render extends React.Component
       completedList={this.state.completedList}
       showCompletedList={this.showCompletedList}
       completeListVisible={this.state.completeListVisible}
+      modalIsOpen={this.state.modalIsOpen}
+      openModal={this.openModal}
+      afterOpenModal={this.afterOpenModal}
+      closeModal={this.closeModal}
     />;
   }
 }

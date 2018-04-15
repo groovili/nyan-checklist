@@ -8,6 +8,7 @@ import appStyles from '../styles/styles.js';
 import moment from 'moment';
 import { timeFormat } from '../config/config.js';
 import ReactTooltip from 'react-tooltip'
+import CompleteModal from './CompleteModal.jsx';
 
 class Template extends React.Component
 {
@@ -71,6 +72,13 @@ class Template extends React.Component
               <dl>
                 <dt>{this.props.subtitle}</dt>
               </dl>
+              <CompleteModal
+                {...this.props}
+                modalIsOpen={this.props.modalIsOpen}
+                openModal={this.props.openModal}
+                afterOpenModal={this.props.afterOpenModal}
+                closeModal={this.props.closeModal}
+              />
           </div>
           <div className="panel panel-default">
             <div className="panel-heading">
