@@ -12,6 +12,7 @@ class Render extends React.Component
     this.state = {
       completedTasks: 0,
       totalEstimatedCurrent: 0,
+      totalEstimatedCompleted: 0,
       list: new Map(),
       completedList: new Map(),
       form: {
@@ -19,6 +20,7 @@ class Render extends React.Component
         task: "",
         date: Moment().hour(0).minute(30).toString(),
       },
+      completeListVisible: false,
     };
 
     this.inputChange = this.inputChange.bind(this);
@@ -31,6 +33,7 @@ class Render extends React.Component
     this._validateForm = this._validateForm.bind(this);
     this._setFormError = this._setFormError.bind(this);
     this._formSetDefaults = this._formSetDefaults.bind(this);
+    this.showCompletedList = this.showCompletedList.bind(this);
   }
 
   _calculateCurrentEstimation(list){
@@ -155,6 +158,8 @@ class Render extends React.Component
       completedTasks: 0,
       form: form,
       totalEstimatedCurrent: 0,
+      totalEstimatedCompleted: 0,
+      completeListVisible: false,
     });
   }
 
@@ -167,10 +172,12 @@ class Render extends React.Component
 
       if(list !== false){
         let totalEstimatedCurrent = this._calculateCurrentEstimation(list);
+        let totalEstimatedCompleted = this._calculateCurrentEstimation(this.state.completedList);
 
         this.setState({
           completedTasks: this.state.completedTasks + 1,
           totalEstimatedCurrent: totalEstimatedCurrent,
+          totalEstimatedCompleted: totalEstimatedCompleted,
         });
 
         this.setState({
@@ -198,6 +205,15 @@ class Render extends React.Component
     }
   }
 
+  showCompletedList(event){
+    event.preventDefault();
+
+    let completeListVisible = !this.state.completeListVisible;
+    this.setState({
+      completeListVisible: completeListVisible,
+    });
+  }
+
   render() {
     return <Template
       {...this.props}
@@ -208,8 +224,12 @@ class Render extends React.Component
       completeTask={this.completeTask}
       completedTasks={this.state.completedTasks}
       totalEstimatedCurrent={this.state.totalEstimatedCurrent}
+      totalEstimatedCompleted={this.state.totalEstimatedCompleted}
       removeTask={this.removeTask}
       form={this.state.form}
+      completedList={this.state.completedList}
+      showCompletedList={this.showCompletedList}
+      completeListVisible={this.state.completeListVisible}
     />;
   }
 }
