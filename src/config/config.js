@@ -1,5 +1,5 @@
 module.exports = {
-  appName: 'React Checklist',
+  appName: 'Nyan Checklist',
   appSubtitle: 'Simple app for task management',
   timeFormat: 'H:mm',
 };

@@ -11,12 +11,16 @@ class Render extends React.Component
 
     this.state = {
       completedTasks: 0,
+      totalEstimatedCurrent: 0,
+      totalEstimatedCompleted: 0,
       list: new Map(),
+      completedList: new Map(),
       form: {
         formClass: "",
         task: "",
         date: Moment().hour(0).minute(30).toString(),
       },
+      completeListVisible: false,
     };
 
     this.inputChange = this.inputChange.bind(this);
@@ -25,6 +29,68 @@ class Render extends React.Component
     this.completeTask = this.completeTask.bind(this);
     this._deleteFromList = this._deleteFromList.bind(this);
     this.removeTask = this.removeTask.bind(this);
+    this._calculateCurrentEstimation = this._calculateCurrentEstimation.bind(this);
+    this._validateForm = this._validateForm.bind(this);
+    this._setFormError = this._setFormError.bind(this);
+    this._formSetDefaults = this._formSetDefaults.bind(this);
+    this.showCompletedList = this.showCompletedList.bind(this);
+  }
+
+  _calculateCurrentEstimation(list){
+    let totalEstimatedCurrent = Moment.duration(0, 'minutes');
+    for (var [key, value] of list.entries()) {
+      totalEstimatedCurrent.add(value[1], 'minutes');
+    }
+
+    return totalEstimatedCurrent.asHours();
+  }
+
+  _validateForm(form){
+    let inputValue = form.task;
+    let dateValue = form.date;
+
+    if((inputValue && dateValue) && (inputValue.length > 0 && dateValue.length > 0)){
+      return true;
+    }
+
+    return false;
+  }
+
+  _setFormError(form){
+    form.formClass = "invalid-input";
+    this.setState({
+      form: form,
+    });
+  }
+
+  _deleteFromList(completeTask, save = false){
+    let tasksList = this.state.list;
+
+    if (tasksList.has(completeTask)) {
+      if(save){
+        let completedElement = tasksList.get(completeTask);
+        let completedList = this.state.completedList;
+        completedList.set(completeTask, completedElement);
+
+        this.setState({
+          completedList: completedList,
+        });
+      }
+
+      tasksList.delete(completeTask);
+
+      return tasksList;
+    }
+
+    return false;
+  }
+
+  _formSetDefaults(form){
+    form.task = "";
+    form.date = Moment().hour(0).minute(30).toString();
+    form.formClass = "";
+
+    return form;
   }
 
   inputChange(event) {
@@ -39,7 +105,8 @@ class Render extends React.Component
       this.setState({
         form: form,
       });
-    }else{
+    }
+    else{
       form.date = event.toString();
       this.setState({
         form: form
@@ -49,39 +116,33 @@ class Render extends React.Component
 
   submitForm(event) {
     event.preventDefault();
-
-    let inputValue = this.state.form.task;
-    let dateValue = this.state.form.date;
     let form = this.state.form;
 
-    if((inputValue && dateValue) && (inputValue.length > 0 && dateValue.length > 0)){
-      if(!this.state.list.has(inputValue)){
-        form.task = "";
-        form.date = undefined;
-        form.formClass = "";
+    if(this._validateForm(form)){
+      if(!this.state.list.has(form.task)){
+        let dateObj = Moment(form.date);
+        let dateStart = dateObj.clone().startOf('day');
+        let diffMinutes = dateObj.diff(dateStart, 'minutes');
 
         let map = this.state.list;
-        map.set(inputValue, [inputValue, dateValue]);
+        map.set(form.task, [form.task, diffMinutes]);
+
+        let totalEstimatedCurrent = this._calculateCurrentEstimation(map);
+
+        form = this._formSetDefaults(form);
 
         this.setState({
           list: map,
           form: form,
+          totalEstimatedCurrent: totalEstimatedCurrent,
         });
       }
       else{
-        form.formClass = "invalid-input";
-
-        this.setState({
-          form: form,
-        });
+        this._setFormError(form);
       }
     }
     else{
-      form.formClass = "invalid-input";
-
-      this.setState({
-        form: form,
-      });
+      this._setFormError(form);
     }
   }
 
@@ -89,27 +150,17 @@ class Render extends React.Component
     event.preventDefault();
 
     let form = this.state.form;
-    form.task = "";
-    form.date = undefined;
-    form.formClass = "";
+    form = this._formSetDefaults(form);
 
     this.setState({
       list: new Map(),
+      completedList: new Map(),
       completedTasks: 0,
       form: form,
+      totalEstimatedCurrent: 0,
+      totalEstimatedCompleted: 0,
+      completeListVisible: false,
     });
-  }
-
-  _deleteFromList(completeTask){
-    let tasksList = this.state.list;
-
-    if (tasksList.has(completeTask)) {
-      tasksList.delete(completeTask);
-
-      return tasksList;
-    }
-
-    return false;
   }
 
   completeTask(event) {
@@ -117,11 +168,16 @@ class Render extends React.Component
     let completeTask = event.target.closest("li").getAttribute("data-item");
 
     if(this.state.list.has(completeTask)){
-      let list = this._deleteFromList(completeTask);
+      let list = this._deleteFromList(completeTask, true);
 
       if(list !== false){
+        let totalEstimatedCurrent = this._calculateCurrentEstimation(list);
+        let totalEstimatedCompleted = this._calculateCurrentEstimation(this.state.completedList);
+
         this.setState({
-          completedTasks: this.state.completedTasks + 1
+          completedTasks: this.state.completedTasks + 1,
+          totalEstimatedCurrent: totalEstimatedCurrent,
+          totalEstimatedCompleted: totalEstimatedCompleted,
         });
 
         this.setState({
@@ -139,11 +195,23 @@ class Render extends React.Component
       let list = this._deleteFromList(completeTask);
 
       if(list !== false){
+        let totalEstimatedCurrent = this._calculateCurrentEstimation(list);
+
         this.setState({
-          list: list
+          list: list,
+          totalEstimatedCurrent: totalEstimatedCurrent,
         });
       }
     }
+  }
+
+  showCompletedList(event){
+    event.preventDefault();
+
+    let completeListVisible = !this.state.completeListVisible;
+    this.setState({
+      completeListVisible: completeListVisible,
+    });
   }
 
   render() {
@@ -155,8 +223,13 @@ class Render extends React.Component
       list={this.state.list}
       completeTask={this.completeTask}
       completedTasks={this.state.completedTasks}
+      totalEstimatedCurrent={this.state.totalEstimatedCurrent}
+      totalEstimatedCompleted={this.state.totalEstimatedCompleted}
       removeTask={this.removeTask}
       form={this.state.form}
+      completedList={this.state.completedList}
+      showCompletedList={this.showCompletedList}
+      completeListVisible={this.state.completeListVisible}
     />;
   }
 }
