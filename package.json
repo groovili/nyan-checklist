@@ -2,7 +2,7 @@
   "name": "nyan-checklist",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/groovili/react-checklist",
+  "repository": "https://github.com/groovili/nyan-checklist",
   "author": "groovili <m.ivanov.work@gmail.com>",
   "license": "MIT",
   "dependencies": {
@@ -20,7 +20,8 @@
     "react-favicon": "^0.0.14",
     "react-hot-loader": "^4.0.1",
     "react-modal": "^3.3.2",
-    "react-tooltip": "^3.5.0"
+    "react-tooltip": "^3.5.0",
+    "webpack-cli": "^3.1.2"
   },
   "devDependencies": {
     "babel": "^6.23.0",
@@ -32,7 +33,7 @@
     "html-webpack-plugin": "^3.2.0",
     "style-loader": "^0.20.3",
     "webpack": "^3.11.0",
-    "webpack-dev-server": "^2.11.2"
+    "webpack-dev-server": "2.*"
   },
   "scripts": {
     "build": "webpack",
