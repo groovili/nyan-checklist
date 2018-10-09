@@ -2,7 +2,7 @@
 
 Simple app for task management where you can create to do list.
 
-Created for learning needs.
+![nyan-screen-safari](https://user-images.githubusercontent.com/7287535/46659898-7f041980-cbbe-11e8-9b04-e38277733a49.png)
 
 # Stack
 
